@@ -14,39 +14,41 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
-	
+public class HunantvOAuth extends Activity {
+
 	private static final String TAG = "MainActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		 OnClickListener listener = new OnClickListener() {
-	            public void onClick(View v) {
-	                switch (v.getId()) {
-	                    case R.id.start_oauth:
-	                    	Log.i(TAG, "-------------start_oauth--------------");
-	                    	Intent intent= new Intent(MainActivity.this, OAuthActivity.class);
-	                        intent.putExtra("from", "hunantv");
-	                        //startActivity(intent);
-	                        startActivityForResult(intent,1);
-	                        break;
-	                }
-	            }
-	        };
-		 
-			Button btnStartOAuth=(Button)findViewById(R.id.start_oauth);
-			btnStartOAuth.setOnClickListener(listener);
-		
+
+		Button btnStartOAuth = (Button) findViewById(R.id.start_oauth);
+		btnStartOAuth.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				switch (v.getId()) {
+				case R.id.start_oauth:
+					Log.i(TAG, "-------------start_oauth--------------");
+					Intent intent = new Intent(HunantvOAuth.this,
+							OAuthActivity.class);
+					intent.putExtra("from", "hunantv");
+					// startActivity(intent);
+					startActivityForResult(intent, 1);
+					break;
+				}
+
+			}
+		});
+
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.i(TAG, "-------------"+requestCode+"--------------");
+		Log.i(TAG, "-------------" + requestCode + "--------------");
 		switch (requestCode) {
-		//case RESULT_OK:
+		// case RESULT_OK:
 		case 1:
 			Log.i(TAG, "-------------RESULT_OK--------------");
 			Bundle bundle = data.getExtras();
@@ -58,23 +60,22 @@ public class MainActivity extends Activity {
 			TextView access_token_text = (TextView) findViewById(R.id.access_token);
 			TextView nickname_text = (TextView) findViewById(R.id.nickname);
 
-			openid_text.setText("openid: "+openid);
-			access_token_text.setText("access_token: "+access_token);
-			nickname_text.setText("nickname: "+nickname);
-			
-			Toast.makeText(getApplicationContext(), "授权流程完成", Toast.LENGTH_LONG).show();
-			
+			openid_text.setText("openid: " + openid);
+			access_token_text.setText("access_token: " + access_token);
+			nickname_text.setText("nickname: " + nickname);
+
+			Toast.makeText(getApplicationContext(), "授权流程完成", Toast.LENGTH_LONG)
+					.show();
+
 			break;
 		default:
 			break;
 		}
-/*		if (requestCode == 1) {
-			if (resultCode == OAuthActivity.RESULT_CODE) {
-				Log.i(TAG, "-------------RESULT_CODE--------------");
-			}
-		}*/
+		/*
+		 * if (requestCode == 1) { if (resultCode == OAuthActivity.RESULT_CODE)
+		 * { Log.i(TAG, "-------------RESULT_CODE--------------"); } }
+		 */
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,13 +83,14 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		//Toast.makeText(getApplicationContext(), item.getItemId(), Toast.LENGTH_LONG).show();
+		// Toast.makeText(getApplicationContext(), item.getItemId(),
+		// Toast.LENGTH_LONG).show();
 		switch (item.getItemId()) {
 		case R.id.action_exit:
-			MainActivity.this.finish();
+			HunantvOAuth.this.finish();
 			break;
 		}
 		return true;
